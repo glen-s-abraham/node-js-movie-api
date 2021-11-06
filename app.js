@@ -8,6 +8,7 @@ const morgan = require('morgan');
 const app = express();
 const AppError = require('./utils/AppError');
 const userRouter = require('./routes/UserRoutes');
+const movieRouter = require('./routes/MovieRoutes');
 const handler = require('./controllers/ErrorController');
 if(process.env.NODE_ENV === 'development'){
     app.use(morgan('dev'));
@@ -33,6 +34,8 @@ app.use(xss());
 app.use(hpp());
 
 app.use('/api/users',userRouter);
+app.use('/api/movies',movieRouter);
+
 //error handler for unhandled routes
 app.all('*',(req,res,next)=>{
     next(new AppError(`Can't find ${req.originalUrl}`,404));
